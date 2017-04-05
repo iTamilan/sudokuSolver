@@ -43,12 +43,13 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         var cell: SudokuCollectionViewCell!
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellName, for: indexPath) as! SudokuCollectionViewCell
         cell.configure(sudoku: array[indexPath.row])
+        cell.contentView.backgroundColor = array[indexPath.row].section % 2 == 0 ? UIColor.lightGray.withAlphaComponent(0.3) : UIColor.white
         return cell;
     }
     //MARK: Collection View FlowLayout Delegate
     //Item Size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width : Int = Int((collectionView.frame.size.width - 21)*1.0/9.0)
+        let width : Int = Int((collectionView.frame.size.width - 14)*1.0/9.0)
         let height = width
         
 //        let column:Int = (indexPath.row+1)%9
@@ -66,7 +67,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
     // Line Spacing
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1.0
+        return 2.0
     }
     // Item Spacing
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

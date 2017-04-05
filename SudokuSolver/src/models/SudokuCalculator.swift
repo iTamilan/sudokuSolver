@@ -9,6 +9,8 @@
 import UIKit
 let kDictKeyCount = "count"
 let kDictKeyLastSudoku = "lastSudoku"
+let kDarkGreenColor = UIColor.init(red: 0.5, green: 1.0, blue: 0.5, alpha: 1.0)
+
 struct UniqueCalculator {
     var count = 0
     var lastSudoku:Sudoku!
@@ -119,7 +121,7 @@ class SudokuCalculator: NSObject {
         for i in 0..<arrayUniqueCandiate.count{
             let dictUnique = arrayUniqueCandiate[i]
             if dictUnique.count == 1 {
-                replace(value: i+1, index:dictUnique.lastSudoku.index,color: .green)
+                replace(value: i+1, index:dictUnique.lastSudoku.index,color: UIColor.red)
             }
         }
     }
@@ -127,7 +129,7 @@ class SudokuCalculator: NSObject {
     func getUnionArray(index:Int) -> Array<Sudoku>{
         let unionTuples = array[index].arraySets
         let unionArray = Array(Set(unionTuples.rowArray).union(Set(unionTuples.columnArray)).union(Set(unionTuples.sectionArray)))
-        print("Index:\(index) Array:\(unionArray)")
+//        print("Index:\(index) Array:\(unionArray)")
         return unionArray
     }
     func getAllSetArray(index:Int) -> (rowArray:Array<Sudoku>,columnArray:Array<Sudoku>,sectionArray:Array<Sudoku>) {

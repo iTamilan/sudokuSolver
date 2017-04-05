@@ -55,7 +55,7 @@ class Sudoku : NSObject {
             let row = i/9
             let column = i%9
             let section = (row/3)*3 + (column/3)
-            print("Row: \(row) Coumn: \(column) Section: \(section)")
+//            print("Row: \(row) Coumn: \(column) Section: \(section)")
             let sudoku = Sudoku.init(row: row, column: column, section: section,index: i)!
             sudoku.initializeNote()
             array.append(sudoku)
