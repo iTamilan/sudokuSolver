@@ -16,6 +16,7 @@ class Sudoku : NSObject {
     private(set) var column: Int
     private(set) var section: Int
     private(set) var note : Array<Int>
+    var arraySets:(rowArray:Array<Sudoku>,columnArray:Array<Sudoku>,sectionArray:Array<Sudoku>)
     var digit : Int
     var digitColor = UIColor.black
     override var hashValue: Int{
@@ -28,6 +29,7 @@ class Sudoku : NSObject {
         self.index = index
         self.note = [Int]()
         self.digit = 0
+        self.arraySets = ([Sudoku](),[Sudoku](),[Sudoku]())
     }
     override var description: String{
         return "\(self.digit)"
@@ -39,9 +41,8 @@ class Sudoku : NSObject {
         return self.note[index] == 0 ? "":"\(index+1)"
     }
     public func initializeNote(){
-        let defaultValue:Int = 1
-        for _ in 1...9 {
-            note.append(defaultValue)
+        for position in 1...9 {
+            note.append(position)
         }
     }
     public func replaceNote(index:Int,value:Int){

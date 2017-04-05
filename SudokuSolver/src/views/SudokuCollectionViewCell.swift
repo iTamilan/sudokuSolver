@@ -16,6 +16,7 @@ class SudokuCollectionViewCell: UICollectionViewCell,UICollectionViewDataSource,
     public func configure(sudoku: Sudoku){
         self.sudoku = sudoku
         labelSudoku.text = sudoku.stringValue()
+        labelSudoku.textColor = sudoku.digitColor
         if (collectionView != nil) {
             collectionView.isHidden =  !(labelSudoku.text?.isEmpty)!
             guard collectionView.isHidden else {
@@ -39,9 +40,9 @@ class SudokuCollectionViewCell: UICollectionViewCell,UICollectionViewDataSource,
     //Item Size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width : Int = Int((collectionView.frame.size.width-4)/3.0)
-        let height = width
-        let column:Int = (indexPath.row+1)%9
-        let row:Int = (indexPath.row+1)/9 + 1
+//        let height = width
+//        let column:Int = (indexPath.row+1)%9
+//        let row:Int = (indexPath.row+1)/9 + 1
         return CGSize.init(width: width, height: width)
     }
     // Line Spacing
