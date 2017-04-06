@@ -11,12 +11,14 @@ let kDictKeyCount = "count"
 let kDictKeyLastSudoku = "lastSudoku"
 let kDarkGreenColor = UIColor.init(red: 0.5, green: 1.0, blue: 0.5, alpha: 1.0)
 
-struct UniqueCalculator {
+struct UniqueCountData {
     var count = 0
     var lastSudoku:Sudoku!
 }
+
 class SudokuCalculator: NSObject {
     var array = Sudoku.getSudokuArray()
+    private var changeOccured = false
     public override init() {
         super.init()
         //Intializing Sets
@@ -29,14 +31,31 @@ class SudokuCalculator: NSObject {
             let strValue = string[startIndex...endIndex]
             self.replace(value: Int("\(strValue)")!, index: i)
         }
+        startCalculation()
+    }
+    //MARK: Initializing the Default Sudoku Sets
+    func intializeTheSudokuSets() {
+        for sudoku in array{
+            sudoku.arraySets = getAllSetArray(index: sudoku.index)
+        }
+    }
+    //MARK: Start calculation
+    //Created static varialbe for maintain the count for testing purpose
+    static var count = 0
+    func startCalculation(){
         //Calculate the Solemate Digits
         calculateSoleCanditate()
         //Calculate unique canditate
         calculateUniqueCanditate(arraySudoku: array)
-    }
-    func intializeTheSudokuSets() {
-        for sudoku in array{
-            sudoku.arraySets = getAllSetArray(index: sudoku.index)
+        //Calculate the naked subset
+        calculateNakedSubset()
+        if changeOccured == true {
+            SudokuCalculator.count = SudokuCalculator.count + 1
+            changeOccured = false
+            startCalculation()
+        }
+        else{
+            print("Number of times calculated \(SudokuCalculator.count)")
         }
     }
     //MARK: Replace new value and recaluculte notes
@@ -44,12 +63,14 @@ class SudokuCalculator: NSObject {
         replace(value: value, index: index)
         let sudoku = array[index]
         sudoku.digitColor = color
+        changeOccured = true
     }
     func replace(value:Int,index:Int){
         let sudoku = array[index]
         sudoku.digit = value
         refreshForChangeInIndex(index: index)
     }
+    //MARK: Refreshing the notes when new index inserted
     func refreshForChangeInIndex(index:Int){
         let changedSudoku = array[index]
         refreshForChange(changedSudoku: changedSudoku)
@@ -70,9 +91,8 @@ class SudokuCalculator: NSObject {
         //Calculte Unique Canditate
 //        calculateUniqueCanditate(arraySudoku: arrayUniqueCandiate)
     }
-    //Mark: Calculation Sole Canditate
+    //MARK: Calculation Sole Canditate
     func calculateSoleCanditate(){
-        var finded = false
         for sudoku in array{
             if sudoku.digit == 0 {
                 let arraySoleCanditate = sudoku.note.filter({ (value) -> Bool in
@@ -80,13 +100,8 @@ class SudokuCalculator: NSObject {
                 })
                 if arraySoleCanditate.count == 1{
                     replace(value: arraySoleCanditate[0], index: sudoku.index, color: .blue)
-                    finded = true
                 }
             }
-        }
-        if finded{
-            //Calculate unique canditate
-            calculateUniqueCanditate(arraySudoku: array)
         }
     }
     //MARK: Calculation Unique canditate
@@ -99,13 +114,9 @@ class SudokuCalculator: NSObject {
         calculateUniqueCanditateAnyOneArray(setArray: sudoku.arraySets.rowArray)
         calculateUniqueCanditateAnyOneArray(setArray: sudoku.arraySets.columnArray)
         calculateUniqueCanditateAnyOneArray(setArray: sudoku.arraySets.sectionArray)
-        calculateSoleCanditate()
     }
     func calculateUniqueCanditateAnyOneArray(setArray:Array<Sudoku>) {
-        var arrayUniqueCandiate = [UniqueCalculator]()
-        for _ in 0...8 {
-            arrayUniqueCandiate.append(UniqueCalculator.init(count: 0, lastSudoku: nil))
-        }
+        var arrayUniqueCandiate = [UniqueCountData](repeatElement(UniqueCountData.init(count: 0, lastSudoku: nil), count: 9))
         for rowSudoku in setArray{
             if rowSudoku.digit == 0 {
                 for noteValue in rowSudoku.note{
@@ -122,6 +133,40 @@ class SudokuCalculator: NSObject {
             let dictUnique = arrayUniqueCandiate[i]
             if dictUnique.count == 1 {
                 replace(value: i+1, index:dictUnique.lastSudoku.index,color: UIColor.red)
+            }
+        }
+    }
+    //MARK: Calculate NakedSubset
+    func calculateNakedSubset(){
+        for i in 0...8 {
+            calculateNakedSubset(setArray: getRowArray(row: i))
+            calculateNakedSubset(setArray: getColumnArray(column: i))
+            calculateNakedSubset(setArray: getSectionArray(section: i))
+        }
+    }
+    func calculateNakedSubset(setArray:Array<Sudoku>){
+        
+        for firstSudoku in setArray where firstSudoku.digit == 0 {
+            print(firstSudoku)
+            var matchedSudoko = [Sudoku]()
+            //Adding first compare object
+            matchedSudoko.append(firstSudoku)
+            //Compare with second sudoko
+            for secondSudoku in setArray where secondSudoku.digit == 0 && secondSudoku.index > firstSudoku.index && firstSudoku.notesValue() == secondSudoku.notesValue(){
+                // Adding matched object
+                matchedSudoko.append(secondSudoku)
+                if matchedSudoko.count == firstSudoku.notesValue().characters.count {
+                    for sudoku in Set(setArray).subtracting(matchedSudoko) where sudoku.digit == 0{
+                        for noteValue in firstSudoku.note where noteValue != 0 && sudoku.note[noteValue-1] != 0{
+
+                            sudoku.replaceNote(index: noteValue-1, value: 0)
+                            print("New Naked subset found.")
+                            changeOccured = true
+                        }
+                    }
+                    
+                    break
+                }
             }
         }
     }

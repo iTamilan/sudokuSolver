@@ -32,13 +32,22 @@ class Sudoku : NSObject {
         self.arraySets = ([Sudoku](),[Sudoku](),[Sudoku]())
     }
     override var description: String{
-        return "\(self.digit)"
+        return "\(Unmanaged.passUnretained(self).toOpaque()) \(self.digit == 0 ? "NoteValues:\(notesValue())":"Value:\(self.digit)")"
     }
     public func stringValue()->String{
             return digit>0 && digit<=9 ? "\(digit)":""
     }
     public func noteValue(index:Int)->String{
         return self.note[index] == 0 ? "":"\(index+1)"
+    }
+    public func notesValue()->String{
+        var returnStr = ""
+        for noteValue in self.note {
+            if noteValue != 0 {
+                returnStr.append("\(noteValue)")
+            }
+        }
+        return returnStr;
     }
     public func initializeNote(){
         for position in 1...9 {
