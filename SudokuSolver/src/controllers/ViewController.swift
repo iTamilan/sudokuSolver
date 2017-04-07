@@ -73,7 +73,11 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1.0
     }
+    //MARK: Actions
     
-    
+    @IBAction func actionBtnNext(_ sender: Any) {
+        sudokuCalculator.performNextCalculation()
+        collectionView.reloadData()
+    }
 }
 

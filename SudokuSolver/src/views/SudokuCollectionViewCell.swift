@@ -19,6 +19,7 @@ class SudokuCollectionViewCell: UICollectionViewCell,UICollectionViewDataSource,
         labelSudoku.textColor = sudoku.digitColor
         if (collectionView != nil) {
             collectionView.isHidden =  !(labelSudoku.text?.isEmpty)!
+            collectionView.reloadData()
             guard collectionView.isHidden else {
                 return
             }

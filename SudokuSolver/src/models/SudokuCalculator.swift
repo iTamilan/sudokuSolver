@@ -15,7 +15,10 @@ struct UniqueCountData {
     var count = 0
     var lastSudoku:Sudoku!
 }
-
+struct IntersectedData {
+    var intersectSudoku:Array<Sudoku>
+    var intersectArray:Array<Int>
+}
 class SudokuCalculator: NSObject {
     var array = Sudoku.getSudokuArray()
     private var changeOccured = false
@@ -31,7 +34,7 @@ class SudokuCalculator: NSObject {
             let strValue = string[startIndex...endIndex]
             self.replace(value: Int("\(strValue)")!, index: i)
         }
-        startCalculation()
+//        startCalculation()
     }
     //MARK: Initializing the Default Sudoku Sets
     func intializeTheSudokuSets() {
@@ -42,7 +45,7 @@ class SudokuCalculator: NSObject {
     //MARK: Start calculation
     //Created static varialbe for maintain the count for testing purpose
     static var count = 0
-    func startCalculation(){
+    public func startCalculation(){
         //Calculate the Solemate Digits
         calculateSoleCanditate()
         //Calculate unique canditate
@@ -52,18 +55,33 @@ class SudokuCalculator: NSObject {
         if changeOccured == true {
             SudokuCalculator.count = SudokuCalculator.count + 1
             changeOccured = false
-            startCalculation()
+            
+//            startCalculation()
         }
         else{
             print("Number of times calculated \(SudokuCalculator.count)")
         }
     }
+    static var nextCount = 0
+    public func performNextCalculation(){
+        switch SudokuCalculator.nextCount%4 {
+        case 1:
+            calculateUniqueCanditate(arraySudoku: array)
+        case 2:
+            calculateNakedSubset()
+        case 3:
+            calculateHiddenNakedSubset()
+        default:
+            calculateSoleCanditate()
+        }
+        SudokuCalculator.nextCount = SudokuCalculator.nextCount + 1
+    }
     //MARK: Replace new value and recaluculte notes
     public func replace(value:Int,index:Int,color:UIColor){
+        changeOccured = true
         replace(value: value, index: index)
         let sudoku = array[index]
         sudoku.digitColor = color
-        changeOccured = true
     }
     func replace(value:Int,index:Int){
         let sudoku = array[index]
@@ -73,7 +91,10 @@ class SudokuCalculator: NSObject {
     //MARK: Refreshing the notes when new index inserted
     func refreshForChangeInIndex(index:Int){
         let changedSudoku = array[index]
+        print("Before Value inserted:",changedSudoku,"\n","Array Sudoku :",array)
         refreshForChange(changedSudoku: changedSudoku)
+        print("After Value inserted:",changedSudoku,"\n","Array Sudoku :",array)
+
     }
     func refreshForChange(changedSudoku:Sudoku){
         guard changedSudoku.digit != 0 else {
@@ -81,7 +102,7 @@ class SudokuCalculator: NSObject {
         }
 //        var arrayUniqueCandiate = [Sudoku]()
         
-        for sudoku in getUnionArray(index: changedSudoku.index){
+        for sudoku in getUnionArray(index: changedSudoku.index) {
             guard sudoku.note[changedSudoku.digit-1] != 0 else {
                 continue
             }
@@ -102,6 +123,10 @@ class SudokuCalculator: NSObject {
                     replace(value: arraySoleCanditate[0], index: sudoku.index, color: .blue)
                 }
             }
+        }
+        if changeOccured {
+            changeOccured = false
+            calculateSoleCanditate()
         }
     }
     //MARK: Calculation Unique canditate
@@ -152,22 +177,86 @@ class SudokuCalculator: NSObject {
             //Adding first compare object
             matchedSudoko.append(firstSudoku)
             //Compare with second sudoko
-            for secondSudoku in setArray where secondSudoku.digit == 0 && secondSudoku.index > firstSudoku.index && firstSudoku.notesValue() == secondSudoku.notesValue(){
+            for secondSudoku in setArray where firstSudoku != secondSudoku && secondSudoku.digit == 0 {
                 // Adding matched object
-                matchedSudoko.append(secondSudoku)
-                if matchedSudoko.count == firstSudoku.notesValue().characters.count {
-                    for sudoku in Set(setArray).subtracting(matchedSudoko) where sudoku.digit == 0{
-                        for noteValue in firstSudoku.note where noteValue != 0 && sudoku.note[noteValue-1] != 0{
-
-                            sudoku.replaceNote(index: noteValue-1, value: 0)
-                            print("New Naked subset found.")
+                if (secondSudoku.notesValue() == (firstSudoku.notesValue()) ) {
+                    matchedSudoko.append(secondSudoku)
+                }
+            }
+            if matchedSudoko.count == firstSudoku.notesValue().characters.count {
+                for sudoku in Set(setArray).subtracting(matchedSudoko) where sudoku.digit == 0{
+                    for noteValue in firstSudoku.note where noteValue != 0 && sudoku.note[noteValue-1] != 0{
+                        sudoku.replaceNote(index: noteValue-1, value: 0)
+                        changeOccured = true
+                    }
+                }
+            }
+        }
+    }
+    //MARK: Compare two arrays
+    func containSameElements<T: Comparable>(_ array1: [T], _ array2: [T]) -> Bool {
+        guard array1.count == array2.count else {
+            return false // No need to sorting if they already have different counts
+        }
+        
+        return array1.sorted() == array2.sorted()
+    }
+    //MARK: Calculate Hidden Naked subset
+    func calculateHiddenNakedSubset(){
+//        for i in 0...8 {
+//            calculateHiddenNakedSubset(setArray: getRowArray(row: i))
+//            calculateHiddenNakedSubset(setArray: getColumnArray(column: i))
+            calculateHiddenNakedSubset(setArray: getSectionArray(section: 6))
+//        }
+    }
+    func calculateHiddenNakedSubset(setArray:Array<Sudoku>){
+        
+        for firstSudoku in setArray where firstSudoku.digit == 0 {
+            print(firstSudoku)
+            var arrayIntersectedDatas = [IntersectedData]()
+            //            var matchedSudoko = [Sudoku]()
+            //Adding first compare object
+            //            matchedSudoko.append(firstSudoku)
+            //Compare with second sudoko
+            for secondSudoku in setArray where firstSudoku != secondSudoku && secondSudoku.digit == 0 {
+                // Adding matched object
+                let intersectSet = Set(firstSudoku.note).intersection(secondSudoku.note)
+                var intersectArray = Array(intersectSet).sorted()
+                intersectArray.removeFirst()
+                if intersectArray.count > 0 {
+                    var arrayfiltered = arrayIntersectedDatas.filter({ (intersectData) -> Bool in
+                      return intersectData.intersectArray == intersectArray
+                    })
+                    if arrayfiltered.count>0 {
+                        arrayfiltered[0].intersectSudoku.append(secondSudoku)
+                    }
+                    else{
+                        arrayIntersectedDatas.append(IntersectedData.init(intersectSudoku: [secondSudoku], intersectArray: intersectArray))
+                    }
+                }
+            }
+            for var intersectData in arrayIntersectedDatas {
+                if intersectData.intersectArray.count == intersectData.intersectSudoku.count+1 {
+                    intersectData.intersectSudoku.append(firstSudoku)
+                    for hiddenNakedSubsetSudoku in intersectData.intersectSudoku {
+                        for noteValue in hiddenNakedSubsetSudoku.note where noteValue != 0 && !intersectData.intersectArray.contains(noteValue){
+                            hiddenNakedSubsetSudoku.replaceNote(index: noteValue-1, value: 0)
                             changeOccured = true
                         }
                     }
-                    
-                    break
                 }
             }
+            //            if matchedSudoko.count == firstSudoku.notesValue().characters.count {
+            //                for sudoku in Set(setArray).subtracting(matchedSudoko) where sudoku.digit == 0{
+            //                    for noteValue in firstSudoku.note where noteValue != 0 && sudoku.note[noteValue-1] != 0{
+            //                        sudoku.replaceNote(index: noteValue-1, value: 0)
+            //                        changeOccured = true
+            //                    }
+            //                }
+            //                break
+            //            }
+            
+            
         }
     }
     //MARK: Getting Arrays

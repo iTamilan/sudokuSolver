@@ -118,14 +118,26 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="iEu-IY-le4"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lcU-P1-RYG">
+                                <rect key="frame" x="153" y="597" width="68" height="30"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <state key="normal" title="     Next    ">
+                                    <color key="titleColor" red="0.28819598439999999" green="0.5748461788" blue="0.38047361390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionBtnNext:" destination="BYZ-38-t0r" eventType="touchUpInside" id="an5-5h-i5Y"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="JjM-Tg-0F2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="BrO-cu-l7G"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lcU-P1-RYG" secondAttribute="bottom" constant="40" id="EzW-my-8qQ"/>
                             <constraint firstItem="JjM-Tg-0F2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IPF-Dk-Kpd"/>
                             <constraint firstItem="eMX-i5-czb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Lw0-AF-vWa"/>
                             <constraint firstItem="eMX-i5-czb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="TgX-wh-dDY"/>
                             <constraint firstItem="JjM-Tg-0F2" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.9:1" id="xrI-KZ-bdO"/>
+                            <constraint firstItem="lcU-P1-RYG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zU9-YN-Stf"/>
                         </constraints>
                     </view>
                     <connections>
