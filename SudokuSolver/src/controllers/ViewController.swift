@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, SudokuDelegate {
 
+    @IBOutlet weak var invalidlabel: UILabel!
     //MARK: Class Variables
     @IBOutlet weak var collectionView: UICollectionView!
     private var sudokuCalculator = SudokuCalculator()
@@ -19,6 +20,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         super.viewDidLoad()
         NSLog("before")
         array = sudokuCalculator.array
+        sudokuCalculator.delegate = self
         NSLog("after")
         collectionView.reloadData()
         NSLog("afterReloading")
@@ -27,13 +29,29 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        sudokuCalculator.startCalculation()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    //MARK: Sudoku Delegate
+    func invalidSudoku(){
+        invalidlabel.text = "Invalid Sudoku!"
+        invalidlabel.textColor = UIColor.red
+        invalidlabel.isHidden = false
+    }
+    func sudokuCompleted() {
+        invalidlabel.text = "Completed!"
+        invalidlabel.textColor = UIColor.green
+        invalidlabel.isHidden = false
+        self.view.isUserInteractionEnabled = false
+    }
+    func refreshView(newArray: Array<Sudoku>) {
+        array = newArray
+        collectionView.reloadData()
+    }
     //MARK: Collection View Datasource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 9*9;

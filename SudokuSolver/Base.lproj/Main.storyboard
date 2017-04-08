@@ -128,13 +128,21 @@
                                     <action selector="actionBtnNext:" destination="BYZ-38-t0r" eventType="touchUpInside" id="an5-5h-i5Y"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Invalid sudoku" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEZ-PZ-wjB">
+                                <rect key="frame" x="237" y="133.5" width="119" height="21.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <color key="textColor" red="0.88722474093264247" green="0.17619031129281071" blue="0.15157071406446526" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="WEZ-PZ-wjB" firstAttribute="trailing" secondItem="JjM-Tg-0F2" secondAttribute="trailing" id="9Oh-uI-7oS"/>
                             <constraint firstItem="JjM-Tg-0F2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="BrO-cu-l7G"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lcU-P1-RYG" secondAttribute="bottom" constant="40" id="EzW-my-8qQ"/>
                             <constraint firstItem="JjM-Tg-0F2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IPF-Dk-Kpd"/>
                             <constraint firstItem="eMX-i5-czb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Lw0-AF-vWa"/>
+                            <constraint firstItem="WEZ-PZ-wjB" firstAttribute="bottom" secondItem="JjM-Tg-0F2" secondAttribute="top" constant="-10" id="NgH-Ih-ekd"/>
                             <constraint firstItem="eMX-i5-czb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="TgX-wh-dDY"/>
                             <constraint firstItem="JjM-Tg-0F2" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.9:1" id="xrI-KZ-bdO"/>
                             <constraint firstItem="lcU-P1-RYG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zU9-YN-Stf"/>
@@ -142,6 +150,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="JjM-Tg-0F2" id="qTQ-Wf-GO8"/>
+                        <outlet property="invalidlabel" destination="WEZ-PZ-wjB" id="V41-JJ-nFD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

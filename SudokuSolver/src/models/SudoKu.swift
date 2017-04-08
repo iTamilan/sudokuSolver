@@ -10,16 +10,17 @@ import UIKit
 func == (lhs:Sudoku,rhs: Sudoku) -> Bool {
     return lhs.index == rhs.index
 }
-class Sudoku : NSObject {
+public class Sudoku : NSObject {
     private(set) var index: Int
     private(set) var row: Int
     private(set) var column: Int
     private(set) var section: Int
     private(set) var note : Array<Int>
+    weak var delegate: SudokuDelegate?
     var arraySets:(rowArray:Array<Sudoku>,columnArray:Array<Sudoku>,sectionArray:Array<Sudoku>)
     var digit : Int
     var digitColor = UIColor.black
-    override var hashValue: Int{
+    override public var hashValue: Int{
         return index.hashValue
     }
     init?(row: Int, column: Int, section: Int, index: Int){
@@ -31,7 +32,7 @@ class Sudoku : NSObject {
         self.digit = 0
         self.arraySets = ([Sudoku](),[Sudoku](),[Sudoku]())
     }
-    override var description: String{
+    override public var description: String{
         return "\(Unmanaged.passUnretained(self).toOpaque()) Index:\(self.index)  \(self.digit == 0 ? "NoteValues:\(notesValue())":"Value:\(self.digit)")"
     }
     public func stringValue()->String{
@@ -54,9 +55,13 @@ class Sudoku : NSObject {
             note.append(position)
         }
     }
-    public func replaceNote(index:Int,value:Int){
+    public func replaceNote(index:Int,value:Int)->Bool{
         note[index] = value
-        print(description)
+//        print(description)
+       let validSudoku = (note.filter({ (noteValue) -> Bool in
+            noteValue != 0
+        }).count>0 ) || (self.digit != 0)
+        return !validSudoku
     }
     //MARK: Initialize the Array
     static public func getSudokuArray()->Array<Sudoku>{
