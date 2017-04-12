@@ -30,6 +30,9 @@
 		922B63F81E949D1A00C0BEDB /* SudokuCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B63F71E949D1A00C0BEDB /* SudokuCalculator.swift */; };
 		922B63F91E949D1A00C0BEDB /* SudokuCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B63F71E949D1A00C0BEDB /* SudokuCalculator.swift */; };
 		922B63FA1E949D1A00C0BEDB /* SudokuCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B63F71E949D1A00C0BEDB /* SudokuCalculator.swift */; };
+		92A395541E9A9EF0001B830B /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A395531E9A9EF0001B830B /* PhotoManager.swift */; };
+		92A395551E9AA0AE001B830B /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A395531E9A9EF0001B830B /* PhotoManager.swift */; };
+		92A395561E9AA0AE001B830B /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A395531E9A9EF0001B830B /* PhotoManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,7 @@
 		922B63E21E94978C00C0BEDB /* SudoKu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudoKu.swift; sourceTree = "<group>"; };
 		922B63E71E94978C00C0BEDB /* SudokuCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuCollectionViewCell.swift; sourceTree = "<group>"; };
 		922B63F71E949D1A00C0BEDB /* SudokuCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuCalculator.swift; sourceTree = "<group>"; };
+		92A395531E9A9EF0001B830B /* PhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +192,7 @@
 			children = (
 				922B63E21E94978C00C0BEDB /* SudoKu.swift */,
 				922B63F71E949D1A00C0BEDB /* SudokuCalculator.swift */,
+				92A395531E9A9EF0001B830B /* PhotoManager.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -360,6 +365,7 @@
 			files = (
 				922B63EB1E94978C00C0BEDB /* ViewController.swift in Sources */,
 				922B63E81E94978C00C0BEDB /* AppDelegate.swift in Sources */,
+				92A395541E9A9EF0001B830B /* PhotoManager.swift in Sources */,
 				922B63F81E949D1A00C0BEDB /* SudokuCalculator.swift in Sources */,
 				922B63F41E94978C00C0BEDB /* SudokuCollectionViewCell.swift in Sources */,
 				922B63F11E94978C00C0BEDB /* SudoKu.swift in Sources */,
@@ -373,6 +379,7 @@
 			files = (
 				922B63EC1E94978C00C0BEDB /* ViewController.swift in Sources */,
 				922B63F51E94978C00C0BEDB /* SudokuCollectionViewCell.swift in Sources */,
+				92A395551E9AA0AE001B830B /* PhotoManager.swift in Sources */,
 				922B63F91E949D1A00C0BEDB /* SudokuCalculator.swift in Sources */,
 				922B63E91E94978C00C0BEDB /* AppDelegate.swift in Sources */,
 				922B63F21E94978C00C0BEDB /* SudoKu.swift in Sources */,
@@ -387,6 +394,7 @@
 			files = (
 				922B63ED1E94978C00C0BEDB /* ViewController.swift in Sources */,
 				922B63F61E94978C00C0BEDB /* SudokuCollectionViewCell.swift in Sources */,
+				92A395561E9AA0AE001B830B /* PhotoManager.swift in Sources */,
 				922B63FA1E949D1A00C0BEDB /* SudokuCalculator.swift in Sources */,
 				922B63EA1E94978C00C0BEDB /* AppDelegate.swift in Sources */,
 				922B63F31E94978C00C0BEDB /* SudoKu.swift in Sources */,
@@ -632,6 +640,7 @@
 				922B63CA1E9407B600C0BEDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		922B63CB1E9407B600C0BEDB /* Build configuration list for PBXNativeTarget "SudokuSolverTests" */ = {
 			isa = XCConfigurationList;
@@ -640,6 +649,7 @@
 				922B63CD1E9407B600C0BEDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		922B63CE1E9407B600C0BEDB /* Build configuration list for PBXNativeTarget "SudokuSolverUITests" */ = {
 			isa = XCConfigurationList;
@@ -648,6 +658,7 @@
 				922B63D01E9407B600C0BEDB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

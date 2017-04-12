@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, SudokuDelegate {
+class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, SudokuDelegate, UIImagePickerControllerDelegate ,UINavigationControllerDelegate {
+    @IBOutlet weak var sudokuImageView: UIImageView!
 
     @IBOutlet weak var invalidlabel: UILabel!
     //MARK: Class Variables
@@ -46,7 +47,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         invalidlabel.text = "Completed!"
         invalidlabel.textColor = UIColor.green
         invalidlabel.isHidden = false
-        self.view.isUserInteractionEnabled = false
+//        self.view.isUserInteractionEnabled = false
     }
     func refreshView(newArray: Array<Sudoku>) {
         array = newArray
@@ -91,8 +92,27 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1.0
     }
+    //MARK: UIImagepickerController Delegate
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            sudokuImageView.isHidden = false
+            sudokuImageView.image = PhotoManager.sharedInstance().processImage(image: image)
+        }else{
+            sudokuImageView.isHidden = true
+            sudokuImageView.image = nil
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
     //MARK: Actions
     
+    @IBAction func actionBtnPhoto(_ sender: Any) {
+        let imagePickerController = UIImagePickerController.init()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        self.present(imagePickerController, animated: true, completion: nil)
+    }
     @IBAction func actionBtnNext(_ sender: Any) {
         sudokuCalculator.performNextCalculation()
         collectionView.reloadData()

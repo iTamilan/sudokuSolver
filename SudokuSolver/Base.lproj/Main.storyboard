@@ -29,6 +29,16 @@
                                 <color key="textColor" red="0.28819598437430716" green="0.5748461787564767" blue="0.38047361389866319" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2P-Ur-E7M">
+                                <rect key="frame" x="307" y="35.5" width="52" height="35"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                <state key="normal" title="Photo">
+                                    <color key="titleColor" red="0.22999776933423433" green="0.34105947741062292" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionBtnPhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o3h-Xy-m3z"/>
+                                </connections>
+                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JjM-Tg-0F2">
                                 <rect key="frame" x="19" y="165" width="337.5" height="337.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -118,7 +128,11 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="iEu-IY-le4"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lcU-P1-RYG">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ezb-Mz-o38">
+                                <rect key="frame" x="19" y="165" width="337.5" height="337.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lcU-P1-RYG">
                                 <rect key="frame" x="153" y="597" width="68" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="     Next    ">
@@ -137,13 +151,19 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Ezb-Mz-o38" firstAttribute="leading" secondItem="JjM-Tg-0F2" secondAttribute="leading" id="5Hv-3x-WhH"/>
                             <constraint firstItem="WEZ-PZ-wjB" firstAttribute="trailing" secondItem="JjM-Tg-0F2" secondAttribute="trailing" id="9Oh-uI-7oS"/>
                             <constraint firstItem="JjM-Tg-0F2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="BrO-cu-l7G"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lcU-P1-RYG" secondAttribute="bottom" constant="40" id="EzW-my-8qQ"/>
                             <constraint firstItem="JjM-Tg-0F2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IPF-Dk-Kpd"/>
+                            <constraint firstItem="Ezb-Mz-o38" firstAttribute="top" secondItem="JjM-Tg-0F2" secondAttribute="top" id="LF1-rt-UIe"/>
                             <constraint firstItem="eMX-i5-czb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Lw0-AF-vWa"/>
                             <constraint firstItem="WEZ-PZ-wjB" firstAttribute="bottom" secondItem="JjM-Tg-0F2" secondAttribute="top" constant="-10" id="NgH-Ih-ekd"/>
                             <constraint firstItem="eMX-i5-czb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="TgX-wh-dDY"/>
+                            <constraint firstAttribute="trailing" secondItem="c2P-Ur-E7M" secondAttribute="trailing" constant="16" id="WQw-Je-lcf"/>
+                            <constraint firstItem="Ezb-Mz-o38" firstAttribute="trailing" secondItem="JjM-Tg-0F2" secondAttribute="trailing" id="ZSh-wK-YDZ"/>
+                            <constraint firstItem="Ezb-Mz-o38" firstAttribute="bottom" secondItem="JjM-Tg-0F2" secondAttribute="bottom" id="nlR-f2-GFi"/>
+                            <constraint firstItem="c2P-Ur-E7M" firstAttribute="centerY" secondItem="eMX-i5-czb" secondAttribute="centerY" id="tNW-KP-Si0"/>
                             <constraint firstItem="JjM-Tg-0F2" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.9:1" id="xrI-KZ-bdO"/>
                             <constraint firstItem="lcU-P1-RYG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zU9-YN-Stf"/>
                         </constraints>
@@ -151,6 +171,7 @@
                     <connections>
                         <outlet property="collectionView" destination="JjM-Tg-0F2" id="qTQ-Wf-GO8"/>
                         <outlet property="invalidlabel" destination="WEZ-PZ-wjB" id="V41-JJ-nFD"/>
+                        <outlet property="sudokuImageView" destination="Ezb-Mz-o38" id="qW8-zr-nSV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

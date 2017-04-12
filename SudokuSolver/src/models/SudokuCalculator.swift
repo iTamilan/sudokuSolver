@@ -37,8 +37,11 @@ class SudokuCalculator: NSObject, SudokuDelegate {
     public override init() {
         super.init()
         //Filling the Values
-        let string = "020501090800203006030060070001000600540000019002000700090030080200804007010907060"
+        var string = "020501090800203006030060070001000600540000019002000700090030080200804007010907060"
         //        let string = "000800000400015030029040518040000120000602000032000090693050870050480001000003000"
+        let emptyValueArray = [String](repeatElement("0", count: 80))
+        string = emptyValueArray.joined()
+        string = "1" + string
         initialize(string: string)
     }
     public init(string:String) {
