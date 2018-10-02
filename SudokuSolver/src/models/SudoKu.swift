@@ -7,10 +7,8 @@
 //
 
 import UIKit
-func == (lhs:Sudoku,rhs: Sudoku) -> Bool {
-    return lhs.index == rhs.index
-}
-public class Sudoku : NSObject {
+
+public class Sudoku : Hashable {
     private(set) var index: Int
     private(set) var row: Int
     private(set) var column: Int
@@ -20,9 +18,15 @@ public class Sudoku : NSObject {
     var arraySets:(rowArray:Array<Sudoku>,columnArray:Array<Sudoku>,sectionArray:Array<Sudoku>)
     var digit : Int
     var digitColor = UIColor.black
-    override public var hashValue: Int{
+    
+    public var hashValue: Int {
         return index.hashValue
     }
+    
+    public static func == (lhs: Sudoku, rhs: Sudoku) -> Bool {
+        return lhs.index == rhs.index
+    }
+    
     init?(row: Int, column: Int, section: Int, index: Int){
         self.row = row
         self.column = column
@@ -32,7 +36,7 @@ public class Sudoku : NSObject {
         self.digit = 0
         self.arraySets = ([Sudoku](),[Sudoku](),[Sudoku]())
     }
-    override public var description: String{
+    public var description: String {
         return "\(Unmanaged.passUnretained(self).toOpaque()) Index:\(self.index)  \(self.digit == 0 ? "NoteValues:\(notesValue())":"Value:\(self.digit)")"
     }
     public func stringValue()->String{

@@ -37,11 +37,15 @@ class SudokuCalculator: NSObject, SudokuDelegate {
     public override init() {
         super.init()
         //Filling the Values
-        var string = "020501090800203006030060070001000600540000019002000700090030080200804007010907060"
+//        var string = "020501090800203006030060070001000600540000019002000700090030080200804007010907060"
+        var string = "002080079090000100704009000910000000000008003080007250000020045000400090340000006"
         //        let string = "000800000400015030029040518040000120000602000032000090693050870050480001000003000"
-        let emptyValueArray = [String](repeatElement("0", count: 80))
-        string = emptyValueArray.joined()
-        string = "1" + string
+//        let emptyValueArray = [String](repeatElement("0", count: 80))
+//        string = emptyValueArray.joined()
+//        string = "1" + string
+         string = "000006000930500000000000891000000010500400007060910250070000500200060400850004002"
+        //Expert
+        string = "007000050000000000010600004590002000030470000060030900800005002000000080200001047"
         initialize(string: string)
     }
     public init(string:String) {
@@ -52,7 +56,7 @@ class SudokuCalculator: NSObject, SudokuDelegate {
         //Intializing Sets
         intializeTheSudokuSets()
         initialString = string
-        for i in 0..<string.characters.count{
+        for i in 0..<string.count{
             let startIndex = string.index(string.startIndex, offsetBy: i)
             let endIndex = string.index(string.startIndex, offsetBy: i)
             let strValue = string[startIndex...endIndex]
@@ -139,12 +143,13 @@ class SudokuCalculator: NSObject, SudokuDelegate {
 //        delegate!.refreshView(newArray: array)
     }
     func checkCompletion()->Bool{
-       var completed = array.filter({ (sudoku) -> Bool in
+        let completed = array.filter({ (sudoku) -> Bool in
             return sudoku.digit == 0
         }).count == 0
-        if completed{
-            completed = true
+        if completed {
+            self.completed = true
             delegate?.sudokuCompleted()
+            delegate?.refreshView(newArray: array)
             print("Number of times calculated \(SudokuCalculator.count)")
         }
         return completed
@@ -288,7 +293,7 @@ class SudokuCalculator: NSObject, SudokuDelegate {
                     matchedSudoko.append(secondSudoku)
                 }
             }
-            if matchedSudoko.count == firstSudoku.notesValue().characters.count {
+            if matchedSudoko.count == firstSudoku.notesValue().count {
                 for sudoku in Set(setArray).subtracting(matchedSudoko) where invalid == false && sudoku.digit == 0{
                     for noteValue in firstSudoku.note where invalid == false && noteValue != 0 && sudoku.note[noteValue-1] != 0{
                         invalid = sudoku.replaceNote(index: noteValue-1, value: 0)

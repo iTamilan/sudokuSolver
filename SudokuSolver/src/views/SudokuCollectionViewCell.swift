@@ -32,10 +32,12 @@ class SudokuCollectionViewCell: UICollectionViewCell,UICollectionViewDataSource,
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellName = "SudokuCollectionViewCell"
-        var cell: SudokuCollectionViewCell!
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellName, for: indexPath) as! SudokuCollectionViewCell
-        cell.labelSudoku.text = self.sudoku.noteValue(index:indexPath.row)
-        return cell;
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellName, for: indexPath) as? SudokuCollectionViewCell {
+            cell.labelSudoku.text = self.sudoku.noteValue(index:indexPath.row)
+            return cell
+        } else {
+            return SudokuCollectionViewCell()
+        }
     }
     //MARK: Collection View FlowLayout Delegate
     //Item Size

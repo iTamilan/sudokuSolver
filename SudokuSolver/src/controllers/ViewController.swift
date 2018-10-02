@@ -57,13 +57,17 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 9*9;
     }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
         let cellName = "SudokuCollectionViewCell"
-        var cell: SudokuCollectionViewCell!
-        cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellName, for: indexPath) as! SudokuCollectionViewCell
-        cell.configure(sudoku: array[indexPath.row])
-        cell.contentView.backgroundColor = array[indexPath.row].section % 2 == 0 ? UIColor.lightGray.withAlphaComponent(0.3) : UIColor.white
-        return cell;
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellName, for: indexPath) as? SudokuCollectionViewCell {
+            cell.configure(sudoku: array[indexPath.row])
+            cell.contentView.backgroundColor = array[indexPath.row].section % 2 == 0 ? UIColor.lightGray.withAlphaComponent(0.3) : UIColor.white
+            return cell
+        } else {
+            return SudokuCollectionViewCell()
+        }
     }
     //MARK: Collection View FlowLayout Delegate
     //Item Size
@@ -93,10 +97,10 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         return 1.0
     }
     //MARK: UIImagepickerController Delegate
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage {
             sudokuImageView.isHidden = false
             sudokuImageView.image = PhotoManager.sharedInstance().processImage(image: image)
         }else{

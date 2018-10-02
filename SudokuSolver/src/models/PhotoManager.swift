@@ -31,7 +31,7 @@ class PhotoManager: NSObject {
         var rect = imageRect
         
         for  feature  in features where features.count == 1 {
-            let textFeature:CITextFeature = feature as! CITextFeature
+//            let textFeature:CITextFeature = feature as! CITextFeature
             let rectangleFeature:CIRectangleFeature = feature as! CIRectangleFeature
             rect = rectangleFeature.bounds
             let topLeftPoint = rectangleFeature.topLeft
