@@ -17,6 +17,7 @@
 		922B63F41E94978C00C0BEDB /* SudokuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B63E71E94978C00C0BEDB /* SudokuCollectionViewCell.swift */; };
 		922B63F81E949D1A00C0BEDB /* SudokuCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922B63F71E949D1A00C0BEDB /* SudokuCalculator.swift */; };
 		92A395541E9A9EF0001B830B /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A395531E9A9EF0001B830B /* PhotoManager.swift */; };
+		C66B134721674529002672F8 /* SampleImage.PNG in Resources */ = {isa = PBXBuildFile; fileRef = C66B134621674529002672F8 /* SampleImage.PNG */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		922B63E71E94978C00C0BEDB /* SudokuCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuCollectionViewCell.swift; sourceTree = "<group>"; };
 		922B63F71E949D1A00C0BEDB /* SudokuCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudokuCalculator.swift; sourceTree = "<group>"; };
 		92A395531E9A9EF0001B830B /* PhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
+		C66B134621674529002672F8 /* SampleImage.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SampleImage.PNG; path = ../../../Downloads/SampleImage.PNG; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 		922B63941E9407B600C0BEDB = {
 			isa = PBXGroup;
 			children = (
+				C66B134621674529002672F8 /* SampleImage.PNG */,
 				922B639F1E9407B600C0BEDB /* SudokuSolver */,
 				922B639E1E9407B600C0BEDB /* Products */,
 			);
@@ -214,6 +217,7 @@
 				922B63AE1E9407B600C0BEDB /* LaunchScreen.storyboard in Resources */,
 				922B63AB1E9407B600C0BEDB /* Assets.xcassets in Resources */,
 				922B63A61E9407B600C0BEDB /* Main.storyboard in Resources */,
+				C66B134721674529002672F8 /* SampleImage.PNG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, SudokuDelegate, UIImagePickerControllerDelegate ,UINavigationControllerDelegate {
+class ViewController: UIViewController,
+UICollectionViewDelegate,
+UICollectionViewDataSource,
+UICollectionViewDelegateFlowLayout,
+SudokuDelegate
+{
     @IBOutlet weak var sudokuImageView: UIImageView!
 
     @IBOutlet weak var invalidlabel: UILabel!
@@ -16,6 +21,8 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBOutlet weak var collectionView: UICollectionView!
     private var sudokuCalculator = SudokuCalculator()
     private var array = [Sudoku]()
+    
+    private let imagePickerController = UIImagePickerController()
     //MARK: View Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,19 +95,48 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 //        print("IndexPath Row : \(indexPath.row) width : \(width) height : \(height) Collection Frame : \(collectionView.frame)")
         return CGSize.init(width: width, height: height)
     }
+    
     // Line Spacing
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2.0
     }
+    
     // Item Spacing
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1.0
     }
-    //MARK: UIImagepickerController Delegate
-    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    
+    //MARK: Actions
+    
+    @IBAction func actionBtnPhoto(_ sender: Any) {
         
+        if let image = UIImage(named: "SampleImage.PNG") {
+            sudokuImageView.isHidden = false
+            sudokuImageView.image = PhotoManager.sharedInstance().processImage(image: image)
+        }
         
-        if let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage {
+//        return
+//        imagePickerController.sourceType = .photoLibrary
+//        imagePickerController.delegate = self
+//        self.present(imagePickerController, animated: true, completion: nil)
+    }
+    @IBAction func actionBtnNext(_ sender: Any) {
+        sudokuCalculator.performNextCalculation()
+        collectionView.reloadData()
+    }
+}
+
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.originalImage] as? UIImage {
             sudokuImageView.isHidden = false
             sudokuImageView.image = PhotoManager.sharedInstance().processImage(image: image)
         }else{
@@ -109,17 +145,19 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         }
         picker.dismiss(animated: true, completion: nil)
     }
-    //MARK: Actions
     
-    @IBAction func actionBtnPhoto(_ sender: Any) {
-        let imagePickerController = UIImagePickerController.init()
-        imagePickerController.sourceType = .photoLibrary
-        imagePickerController.delegate = self
-        self.present(imagePickerController, animated: true, completion: nil)
-    }
-    @IBAction func actionBtnNext(_ sender: Any) {
-        sudokuCalculator.performNextCalculation()
-        collectionView.reloadData()
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//
+//        if let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage {
+//            sudokuImageView.isHidden = false
+//            sudokuImageView.image = PhotoManager.sharedInstance().processImage(image: image)
+//        }else{
+//            sudokuImageView.isHidden = true
+//            sudokuImageView.image = nil
+//        }
+//        picker.dismiss(animated: true, completion: nil)
+//    }
+    
+    @objc func imagePickerController(_ picker: UIImagePickerController, pickedImage: UIImage?) {
     }
 }
-
